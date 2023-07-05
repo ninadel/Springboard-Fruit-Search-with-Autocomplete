@@ -104,8 +104,13 @@ const fruit = [
 ];
 
 // This function is called by the dom load event listener
-function getListObjects(arr) {}
-// * An event-listener for keystrokes which will trigger the function search()
+function startSearch() {
+  // what initializes when the search page is loaded?
+  // change arr of fruit strings to an arr of fruit objects, where keys are simple, display, and emoji
+  // simple will be lowercase string with spaces removed
+  // simple value will be used for comparing input to fruit name, will be lowercase only with emoji and spaces stripped out
+  // set a maximum number of displayed suggestions, start with 10?
+}
 
 // this function handles the logic of searching through the fruit list and returning a list of suggestions
 // this function filters a list of fruit based on user input
@@ -115,7 +120,20 @@ function getListObjects(arr) {}
 function search(str) {
   let results = [];
   // TODO
-  // convert input str to lowercase
+  // converts search str to lowercase with no spaces or emojis
+  // checks string against const fruit which is a list of fruit objects
+  // filter arr of fruit objects to objects that match input
+  // where indexOf input in str is not -1
+  // optional: create an arr of ordered fruit objects which promotes most relevant suggestions
+  // match scores: use indexOf for each suggestion - lowest indexOf gets promoted first
+  // reduce list of matching fruit objects into a new object which stores arrays of objects by match score
+  // take object which stores match scores, convert match scores into an array and order them so lowest match score is first
+  // iterate through match score array, starting with lowest match score, and build result list until maximum number is reached
+  // optional: fuzzy matching?
+  // if input has spaces, check as if there were no spaces
+  // Questions to resolve
+  // what if the input and list items differ in spacing?
+  // how to prioritize most likely suggestions? e.g. if searching for "a" prioritize suggestions that have "a" in the first position
   return results;
 }
 
@@ -162,6 +180,8 @@ function useSuggestion(e) {
   // TODO
 }
 
+// listener which runs when DOM is loaded
+document.addEventListener("DOMContentLoaded", startSearch);
 // keystrokes will trigger the function searchHandler
 input.addEventListener("keyup", searchHandler);
 // clicking on a suggestion will trigger the function useSuggestion
