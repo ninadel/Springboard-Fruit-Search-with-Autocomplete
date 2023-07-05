@@ -12,6 +12,9 @@
 // * On click, an event listener will trigger a function called useSuggestion(), which will populate the search box with the user's selected suggestiion
 // * A stylesheet will define the search UI with a linear gradient background and a translucent background for the search bar which shows the background below
 
+// NOTE: parsing out emojis https://stackoverflow.com/questions/37089427/javascript-find-emoji-in-string-and-parse
+// I want to create an array of objects based on the list of objects to be searched. where would this live? should I have a separate function for this?
+
 const input = document.querySelector("#fruit");
 
 // suggestions will be stored in a UL
@@ -100,10 +103,9 @@ const fruit = [
   "Yuzu",
 ];
 
+// This function is called by the dom load event listener
+function getListObjects(arr) {}
 // * An event-listener for keystrokes which will trigger the function search()
-
-// event listener for dom load?
-// put focus on the search box on page load
 
 // this function handles the logic of searching through the fruit list and returning a list of suggestions
 // this function filters a list of fruit based on user input
@@ -113,7 +115,7 @@ const fruit = [
 function search(str) {
   let results = [];
   // TODO
-
+  // convert input str to lowercase
   return results;
 }
 
@@ -162,4 +164,5 @@ function useSuggestion(e) {
 
 // keystrokes will trigger the function searchHandler
 input.addEventListener("keyup", searchHandler);
+// clicking on a suggestion will trigger the function useSuggestion
 suggestions.addEventListener("click", useSuggestion);
