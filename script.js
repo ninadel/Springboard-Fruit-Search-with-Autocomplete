@@ -12,9 +12,6 @@
 // * On click, an event listener will trigger a function called useSuggestion(), which will populate the search box with the user's selected suggestiion
 // * A stylesheet will define the search UI with a linear gradient background and a translucent background for the search bar which shows the background below
 
-// NOTE: parsing out emojis https://stackoverflow.com/questions/37089427/javascript-find-emoji-in-string-and-parse
-// I want to create an array of objects based on the list of objects to be searched. where would this live? should I have a separate function for this?
-
 const input = document.querySelector("#fruit");
 
 // suggestions will be stored in a UL
@@ -105,11 +102,30 @@ const fruit = [
 
 // This function is called by the dom load event listener
 function startSearch() {
-  // what initializes when the search page is loaded?
-  // change arr of fruit strings to an arr of fruit objects, where keys are simple, display, and emoji
-  // simple will be lowercase string with spaces removed
-  // simple value will be used for comparing input to fruit name, will be lowercase only with emoji and spaces stripped out
+  // what is run when the search page is loaded?
+  // focus on search box
   // set a maximum number of displayed suggestions, start with 10?
+}
+
+// this function is called once by startSearch to take the arr of possible result strings and return an arr of result objects
+function parseArr(arr) {
+  // NOTE: parsing out emojis https://stackoverflow.com/questions/37089427/javascript-find-emoji-in-string-and-parse
+  let emojiRE = /\p{Emoji}/u;
+
+  // change arr of fruit strings to an arr of fruit objects, where keys are simple, display, and emoji
+  const newArr = arr.reduce(function (currentArr, nextItem) {
+    let newObj = {};
+    // simple will be lowercase string with spaces removed
+    // simple value will be used for comparing input to fruit name, will be lowercase only with emoji and spaces stripped out
+    newObj["simple"] = nextItem
+      .toLowerCase()
+      .replace(emojiRE, "")
+      .replace(" ", "");
+    newObj["display"] = nextItem;
+    currentArr.push(newObj);
+    return currentArr;
+  }, []);
+  return newArr;
 }
 
 // this function handles the logic of searching through the fruit list and returning a list of suggestions
@@ -120,7 +136,7 @@ function startSearch() {
 function search(str) {
   let results = [];
   // TODO
-  // converts search str to lowercase with no spaces or emojis
+  // converts input str to lowercase with no spaces or emojis
   // checks string against const fruit which is a list of fruit objects
   // filter arr of fruit objects to objects that match input
   // where indexOf input in str is not -1
@@ -180,9 +196,9 @@ function useSuggestion(e) {
   // TODO
 }
 
-// listener which runs when DOM is loaded
-document.addEventListener("DOMContentLoaded", startSearch);
+// // listener which runs when DOM is loaded
+// document.addEventListener("DOMContentLoaded", startSearch);
 // keystrokes will trigger the function searchHandler
-input.addEventListener("keyup", searchHandler);
+// input.addEventListener("keyup", searchHandler);
 // clicking on a suggestion will trigger the function useSuggestion
-suggestions.addEventListener("click", useSuggestion);
+// suggestions.addEventListener("click", useSuggestion);
