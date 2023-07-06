@@ -128,6 +128,19 @@ function parseArr(arr) {
   return newArr;
 }
 
+// this function takes an array of objects with string values as the first argument, a string as a second argument, and an optional number
+// this function returns an array of strings
+// this function is called by the search function
+function getMatches(arr, str, n = 10) {
+  // filter arr of fruit objects to objects that match input
+  // where indexOf input in str is not -1
+  // optional: create an arr of ordered fruit objects which promotes most relevant suggestions
+  // match scores: use indexOf for each suggestion - lowest indexOf gets promoted first
+  // reduce list of matching fruit objects into a new object which stores arrays of objects by match score
+  // take object which stores match scores, convert match scores into an array and order them so lowest match score is first
+  // iterate through match score array, starting with lowest match score, and build result list until maximum number is reached
+}
+
 // this function handles the logic of searching through the fruit list and returning a list of suggestions
 // this function filters a list of fruit based on user input
 // this function filters list items where the input appears anywhere in the list
@@ -138,13 +151,6 @@ function search(str) {
   // TODO
   // converts input str to lowercase with no spaces or emojis
   // checks string against const fruit which is a list of fruit objects
-  // filter arr of fruit objects to objects that match input
-  // where indexOf input in str is not -1
-  // optional: create an arr of ordered fruit objects which promotes most relevant suggestions
-  // match scores: use indexOf for each suggestion - lowest indexOf gets promoted first
-  // reduce list of matching fruit objects into a new object which stores arrays of objects by match score
-  // take object which stores match scores, convert match scores into an array and order them so lowest match score is first
-  // iterate through match score array, starting with lowest match score, and build result list until maximum number is reached
   // optional: fuzzy matching?
   // if input has spaces, check as if there were no spaces
   // Questions to resolve
