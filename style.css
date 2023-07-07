@@ -20,10 +20,10 @@ input {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: top;
+  align-items: flex-start;
   /* align-items: center; */
   width: 400px;
-  min-height: 400px;
+  height: 400px;
   margin: auto;
 }
 .search-container input,
@@ -38,8 +38,7 @@ input {
 .search-container .suggestions {
   /* TODO */
   display: relative;
-  height: auto;
-  background: blue;
+  height: 300px;
   visibility: hidden;
 }
 
