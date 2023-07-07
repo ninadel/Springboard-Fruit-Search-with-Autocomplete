@@ -109,13 +109,13 @@ const suggestionDisplayCount = 8;
 // suggestions will be stored in a UL
 // DOM manipulation will be used to create a dynamic UL of items where items in the fruit list are filtered based on text provided by input
 function startSearch() {
-  input.addEventListener("keyup", searchHandler);
   // what is run when the search page is loaded?
-  // focus on search box
-  console.log("start", suggestionObs);
   // keystrokes will trigger the function searchHandler
+  input.addEventListener("keyup", searchHandler);
   // clicking on a suggestion will trigger the function useSuggestion
-  // suggestions.addEventListener("click", useSuggestion);
+  suggestions.addEventListener("click", useSuggestion);
+  // focus on search box
+  input.focus();
 }
 
 // this function is called once by startSearch to take the arr of possible result strings and return an arr of result objects
@@ -215,6 +215,7 @@ function search(str) {
 
 // this function is called by the keystroke event listener
 function searchHandler(e) {
+  console.log("searchHandler");
   let searchStr = input.value;
   // TODO
   // set suggestions to be invisible
@@ -222,13 +223,15 @@ function searchHandler(e) {
   // set suggestions to be empty
   suggestions.innerHTML = "";
   // call the search function with string from input to get array of fruit results
-  results = search(searchStr);
-  // if there is a match from the list, call the showSuggestions function to display suggestions UI
-  if (results.length > 0) {
-    showSuggestions(results, "a");
-    console.log("showSuggestions");
-  } else {
-    suggestions.classList.remove("has-suggestions");
+  if (searchStr.length > 0) {
+    results = search(searchStr);
+    // if there is a match from the list, call the showSuggestions function to display suggestions UI
+    if (results.length > 0) {
+      showSuggestions(results, "a");
+      console.log("showSuggestions");
+    } else {
+      suggestions.classList.remove("has-suggestions");
+    }
   }
   // if text input is empty, do not show suggestions
   // if text put is populated with user typed input
@@ -275,6 +278,10 @@ function showSuggestions(results, inputVal) {
 // this function is called by the click event listener
 function useSuggestion(e) {
   // TODO
+  if (e.target.tagName === "LI") {
+    input.value = e.target.innerText;
+    suggestions.classList.remove("has-suggestions");
+  }
 }
 
 // // listener which runs when DOM is loaded
