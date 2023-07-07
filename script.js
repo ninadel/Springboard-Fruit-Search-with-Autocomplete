@@ -143,19 +143,6 @@ function parseArr(arr) {
 // this function returns an array of strings
 // this function is called by the search function
 function rankMatches(arr, str) {
-  return (
-    arr
-      // filter to only include those where the search string is present
-      .filter(function (ob) {
-        return ob["simple"].indexOf(str) !== -1;
-      })
-      // add a property rank score which indicates the position of the string in the suggestion
-      .reduce(function (rankedSet, ob) {
-        ob["rank"] = ob["simple"].indexOf(str);
-        rankedSet.push(ob);
-        return rankedSet;
-      }, [])
-  );
   // filter arr of fruit objects to objects that match input
   // where indexOf input in str is not -1
   // optional: create an arr of ordered fruit objects which promotes most relevant suggestions
@@ -175,6 +162,7 @@ function search(str) {
   let rankings = [];
   let resultsToAdd = [];
   let matchScores = [];
+  let rankedSuggestions = [];
   // take an array of the suggestion objects
   rankedSuggestions = suggestionObs
     // filter to only include those where the search string is present
