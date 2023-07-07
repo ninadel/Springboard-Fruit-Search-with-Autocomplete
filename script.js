@@ -12,11 +12,11 @@
 // * On click, an event listener will trigger a function called useSuggestion(), which will populate the search box with the user's selected suggestiion
 // * A stylesheet will define the search UI with a linear gradient background and a translucent background for the search bar which shows the background below
 
+const suggestions = document.querySelector(".suggestions ul");
+
 const input = document.querySelector("#fruit");
 
-// suggestions will be stored in a UL
-// DOM manipulation will be used to create a dynamic UL of items where items in the fruit list are filtered based on text provided by input
-const suggestions = document.querySelector(".suggestions ul");
+const suggestionDiv = document.querySelector("div.suggestions");
 
 const fruit = [
   "Apple",
@@ -100,17 +100,28 @@ const fruit = [
   "Yuzu",
 ];
 
+const suggestionObs = parseArr(fruit);
+
+// set a maximum number of displayed suggestions, start with 8?
+const suggestionDisplayCount = 8;
+
 // This function is called by the dom load event listener
+// suggestions will be stored in a UL
+// DOM manipulation will be used to create a dynamic UL of items where items in the fruit list are filtered based on text provided by input
 function startSearch() {
+  input.addEventListener("keyup", searchHandler);
   // what is run when the search page is loaded?
   // focus on search box
-  // set a maximum number of displayed suggestions, start with 10?
+  console.log("start", suggestionObs);
+  // keystrokes will trigger the function searchHandler
+  // clicking on a suggestion will trigger the function useSuggestion
+  // suggestions.addEventListener("click", useSuggestion);
 }
 
 // this function is called once by startSearch to take the arr of possible result strings and return an arr of result objects
 function parseArr(arr) {
   // NOTE: parsing out emojis https://stackoverflow.com/questions/37089427/javascript-find-emoji-in-string-and-parse
-  let emojiRE = /\p{Emoji}/u;
+  //   let emojiRE = /\p{Emoji}/u;
 
   // change arr of fruit strings to an arr of fruit objects, where keys are simple, display, and emoji
   const newArr = arr.reduce(function (currentArr, nextItem) {
@@ -119,7 +130,7 @@ function parseArr(arr) {
     // simple value will be used for comparing input to fruit name, will be lowercase only with emoji and spaces stripped out
     newObj["simple"] = nextItem
       .toLowerCase()
-      .replace(emojiRE, "")
+      //   .replace(emojiRE, "")
       .replace(" ", "");
     newObj["display"] = nextItem;
     currentArr.push(newObj);
@@ -131,7 +142,20 @@ function parseArr(arr) {
 // this function takes an array of objects with string values as the first argument, a string as a second argument, and an optional number
 // this function returns an array of strings
 // this function is called by the search function
-function getMatches(arr, str, n = 10) {
+function rankMatches(arr, str) {
+  return (
+    arr
+      // filter to only include those where the search string is present
+      .filter(function (ob) {
+        return ob["simple"].indexOf(str) !== -1;
+      })
+      // add a property rank score which indicates the position of the string in the suggestion
+      .reduce(function (rankedSet, ob) {
+        ob["rank"] = ob["simple"].indexOf(str);
+        rankedSet.push(ob);
+        return rankedSet;
+      }, [])
+  );
   // filter arr of fruit objects to objects that match input
   // where indexOf input in str is not -1
   // optional: create an arr of ordered fruit objects which promotes most relevant suggestions
@@ -148,9 +172,51 @@ function getMatches(arr, str, n = 10) {
 // this function is called by searchHandler
 function search(str) {
   let results = [];
-  // TODO
-  // converts input str to lowercase with no spaces or emojis
-  // checks string against const fruit which is a list of fruit objects
+  let rankings = [];
+  let resultsToAdd = [];
+  let matchScores = [];
+  // take an array of the suggestion objects
+  rankedSuggestions = suggestionObs
+    // filter to only include those where the search string is present
+    .filter(function (ob) {
+      return ob["simple"].indexOf(str) !== -1;
+    })
+    // add a property rank score which indicates the position of the string in the suggestion
+    .reduce(function (rankedSet, ob) {
+      ob["rank"] = ob["simple"].indexOf(str);
+      rankedSet.push(ob);
+      return rankedSet;
+    }, []);
+  // extract a sorted list of possible ranks to use in loop
+  rankings = Array.from(
+    new Set(
+      rankedSuggestions
+        .map(function (ob) {
+          return ob["rank"];
+        })
+        .sort()
+    )
+  );
+  // loop through ranks, starting with lowest rank score (highest match)
+  for (let i = 0; i < rankings.length; i++) {
+    resultsToAdd = rankedSuggestions
+      .filter(function (obj) {
+        return obj["rank"] === rankings[i];
+      })
+      // take the display strings from the objects
+      .map(function (obj) {
+        return obj["display"];
+      });
+    // add suggestion to results list
+    for (let j = 0; j < resultsToAdd.length; j++) {
+      results.push(resultsToAdd[j]);
+      // if display limit is reached, return result list
+      if (results.length === suggestionDisplayCount) {
+        console.log("limit results", results);
+        return results;
+      }
+    }
+  }
   // optional: fuzzy matching?
   // if input has spaces, check as if there were no spaces
   // Questions to resolve
@@ -161,18 +227,39 @@ function search(str) {
 
 // this function is called by the keystroke event listener
 function searchHandler(e) {
+  let searchStr = input.value;
   // TODO
+  // set suggestions to be invisible
+  suggestions.classList.remove("has-suggestions");
+  // set suggestions to be empty
+  suggestions.innerHTML = "";
   // call the search function with string from input to get array of fruit results
+  results = search(searchStr);
+  // if there is a match from the list, call the showSuggestions function to display suggestions UI
+  if (results.length > 0) {
+    showSuggestions(results, "a");
+    console.log("showSuggestions");
+  } else {
+    suggestions.classList.remove("has-suggestions");
+  }
   // if text input is empty, do not show suggestions
   // if text put is populated with user typed input
   // if there are not matches, do not show suggestions
-  // if there is a match from the list, call the showSuggestions function to display suggestions UI
   // if a suggestion is clicked, do not show suggestions
 }
 
 // this function handles the UI of displaying suggestions below the search box
 // this function is called by the searchHandler function
 function showSuggestions(results, inputVal) {
+  // append results to the suggestions list
+  for (item of results) {
+    const resultItem = document.createElement("li");
+    resultItem.innerText = item;
+    suggestions.append(resultItem);
+  }
+  // if there's a match, show suggestions
+  suggestions.classList.add("has-suggestions");
+  // for now, just if something is entered
   // TODO
   //
   // CSS selectors already provided for this project
@@ -203,8 +290,4 @@ function useSuggestion(e) {
 }
 
 // // listener which runs when DOM is loaded
-// document.addEventListener("DOMContentLoaded", startSearch);
-// keystrokes will trigger the function searchHandler
-// input.addEventListener("keyup", searchHandler);
-// clicking on a suggestion will trigger the function useSuggestion
-// suggestions.addEventListener("click", useSuggestion);
+document.addEventListener("DOMContentLoaded", startSearch);
