@@ -9,6 +9,10 @@
 body {
   /* TODO */
   background-color: black;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
 }
 
 input {
@@ -17,11 +21,12 @@ input {
 
 .search-container {
   /* TODO */
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-start; */
   /* align-items: center; */
+  display: relative;
   width: 400px;
   height: 400px;
   margin: auto;
@@ -37,7 +42,8 @@ input {
 }
 .search-container .suggestions {
   /* TODO */
-  display: relative;
+  /* display: relative; */
+  display: absolute;
   height: 300px;
   visibility: hidden;
   height: 300px;
