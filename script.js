@@ -200,7 +200,6 @@ function search(str) {
       results.push(resultsToAdd[j]);
       // if display limit is reached, return result list
       if (results.length === suggestionDisplayCount) {
-        console.log("limit results", results);
         return results;
       }
     }
@@ -215,7 +214,6 @@ function search(str) {
 
 // this function is called by the keystroke event listener
 function searchHandler(e) {
-  console.log("searchHandler");
   let searchStr = input.value;
   // TODO
   // set suggestions to be invisible
@@ -228,7 +226,6 @@ function searchHandler(e) {
     // if there is a match from the list, call the showSuggestions function to display suggestions UI
     if (results.length > 0) {
       showSuggestions(results, "a");
-      console.log("showSuggestions");
     } else {
       suggestions.classList.remove("has-suggestions");
     }
