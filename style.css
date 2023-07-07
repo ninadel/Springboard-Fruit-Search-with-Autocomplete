@@ -40,6 +40,7 @@ input {
   display: relative;
   height: 300px;
   visibility: hidden;
+  height: 300px;
 }
 
 ul {
@@ -47,8 +48,8 @@ ul {
   background-color: white;
   list-style-type: none;
   margin: 0px;
-  padding: 0px;
-  visibility: visible;
+  padding: 5px;
+  visibility: hidden;
 }
 ul.has-suggestions {
   /* TODO */
