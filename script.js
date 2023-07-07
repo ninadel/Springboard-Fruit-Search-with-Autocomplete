@@ -247,28 +247,6 @@ function showSuggestions(results, inputVal) {
   }
   // if there's a match, show suggestions
   suggestions.classList.add("has-suggestions");
-  // for now, just if something is entered
-  // TODO
-  //
-  // CSS selectors already provided for this project
-  // .search-container {
-  // 	/* TODO */
-  //    }
-  //    .search-container input,
-  //    .search-container .suggestions {
-  //    }
-  //    .search-container input {
-  //    }
-  //    .search-container .suggestions {
-  //    }
-  //    ul {
-  //    }
-  //    ul.has-suggestions {
-  //    }
-  //    ul li {
-  //    }
-  //    ul li:hover {
-  //    }
 }
 
 // this function takes the target of the click and populates the search box with the list item from the target
