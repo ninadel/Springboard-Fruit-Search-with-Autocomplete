@@ -106,6 +106,7 @@ function startSearch() {
     "Yuzu",
   ];
 
+  // this is an array of objects which includes suggestions in different text formats
   const suggestionObs = parseArr(fruit);
 
   // set a maximum number of displayed suggestions, start with 8?
@@ -113,18 +114,12 @@ function startSearch() {
 
   // this function is called once by startSearch to take the arr of possible result strings and return an arr of result objects
   function parseArr(arr) {
-    // NOTE: parsing out emojis https://stackoverflow.com/questions/37089427/javascript-find-emoji-in-string-and-parse
-    //   let emojiRE = /\p{Emoji}/u;
-
     // change arr of fruit strings to an arr of fruit objects, where keys are simple, display, and emoji
     const newArr = arr.reduce(function (currentArr, nextItem) {
       let newObj = {};
       // simple will be lowercase string with spaces removed
       // simple value will be used for comparing input to fruit name, will be lowercase only with emoji and spaces stripped out
-      newObj["simple"] = nextItem
-        .toLowerCase()
-        //   .replace(emojiRE, "")
-        .replace(" ", "");
+      newObj["simple"] = nextItem.toLowerCase().replace(" ", "");
       newObj["display"] = nextItem;
       currentArr.push(newObj);
       return currentArr;
@@ -267,7 +262,6 @@ function startSearch() {
   // this function takes the target of the click and populates the search box with the list item from the target
   // this function is called by the click event listener
   function useSuggestion(e) {
-    // TODO
     if (e.target.tagName === "LI") {
       input.value = e.target.innerText;
       suggestions.classList.remove("has-suggestions");
