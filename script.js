@@ -114,6 +114,8 @@ function startSearch() {
   input.addEventListener("keyup", searchHandler);
   // clicking on a suggestion will trigger the function useSuggestion
   suggestions.addEventListener("click", useSuggestion);
+  // clicking on a suggestion will trigger the function useSuggestion
+  suggestions.addEventListener("mouseover", highlightSuggestion);
   // focus on search box
   input.focus();
 }
@@ -150,6 +152,50 @@ function rankMatches(arr, str) {
   // reduce list of matching fruit objects into a new object which stores arrays of objects by match score
   // take object which stores match scores, convert match scores into an array and order them so lowest match score is first
   // iterate through match score array, starting with lowest match score, and build result list until maximum number is reached
+}
+
+// this function returns HTML which will be displayed for the LI of the suggestion
+// this function compares the inputVal to the diplay string at the rank position to determine the innerHTML fo the result
+// this function is called by search
+function getDisplayHTML(displayStr, rank, inputVal) {
+  let startBold = null;
+  let endBold = null;
+  let displayHTML = null;
+  let spaceIndex = displayStr.indexOf(" ");
+  // check if the input val is in the display
+  subStrIndex = displayStr.toLowerCase().indexOf(inputVal.toLowerCase());
+  // check if the matching string between inputVal and suggestion is contiguous (doesn't have a space)
+  if (subStrIndex !== -1) {
+    // if there is not a space (easy match), return HTML
+    endBold = subStrIndex + inputVal.length;
+    startBold = subStrIndex;
+  } else {
+    // if there is a space (mismatch), return HTML
+    subStrIndex = displayStr
+      .toLowerCase()
+      .replace(" ", "")
+      .indexOf(inputVal.toLowerCase());
+    endBold = subStrIndex + inputVal.length + 1;
+    startBold = subStrIndex;
+  }
+  // if the match is at the beginning of the suggestion, return HTML
+  if (startBold === 0) {
+    return (
+      '<span class="match-text">' +
+      displayStr.slice(subStrIndex, endBold) +
+      "</span>" +
+      displayStr.slice(endBold, displayStr.length)
+    );
+  } else {
+    // if the match is not at the beginning of the suggestion, return HTML
+    return (
+      displayStr.slice(0, startBold) +
+      '<span class="match-text">' +
+      displayStr.slice(startBold, endBold) +
+      "</span>" +
+      displayStr.slice(endBold, displayStr.length)
+    );
+  }
 }
 
 // this function handles the logic of searching through the fruit list and returning a list of suggestions
@@ -193,7 +239,8 @@ function search(str) {
       })
       // take the display strings from the objects
       .map(function (obj) {
-        return obj["display"];
+        displayStr = obj["display"];
+        return getDisplayHTML(obj["display"], obj["rank"], str);
       });
     // add suggestion to results list
     for (let j = 0; j < resultsToAdd.length; j++) {
@@ -242,7 +289,10 @@ function showSuggestions(results, inputVal) {
   // append results to the suggestions list
   for (item of results) {
     const resultItem = document.createElement("li");
-    resultItem.innerText = item;
+    // TODO : highlight inputval in string
+    // find highlight in input item
+    // if string is present in
+    resultItem.innerHTML = item;
     suggestions.append(resultItem);
   }
   // if there's a match, show suggestions
@@ -256,6 +306,16 @@ function useSuggestion(e) {
   if (e.target.tagName === "LI") {
     input.value = e.target.innerText;
     suggestions.classList.remove("has-suggestions");
+  }
+}
+
+// this function takes the target of the click and populates the search box with the list item from the target
+// this function is called by the click event listener
+function highlightSuggestion(e) {
+  // TODO
+  if (e.target.tagName === "LI") {
+    e.target.classList.add("hover");
+    console.log("hover");
   }
 }
 
