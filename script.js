@@ -268,6 +268,7 @@ function showSuggestions(results, inputVal) {
   }
   // if there's a match, show suggestions
   suggestions.classList.add("has-suggestions");
+  return suggestions;
 }
 
 // this function takes the target of the click and populates the search box with the list item from the target
