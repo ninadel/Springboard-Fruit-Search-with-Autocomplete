@@ -200,13 +200,9 @@ function getDisplayHTML(displayStr, rank, inputVal) {
 // this function is case insensitive
 // this function is called by searchHandler
 function search(str) {
-  let results = [];
-  let rankings = [];
-  let resultsToAdd = [];
-  let matchScores = [];
-  let rankedSuggestions = [];
+  const results = [];
   // take an array of the suggestion objects
-  rankedSuggestions = suggestionObs
+  const rankedSuggestions = suggestionObs
     // filter to only include those where the search string is present
     .filter(function (ob) {
       return ob["simple"].indexOf(str) !== -1;
@@ -218,7 +214,7 @@ function search(str) {
       return rankedSet;
     }, []);
   // extract a sorted list of possible ranks to use in loop
-  rankings = Array.from(
+  const rankings = Array.from(
     new Set(
       rankedSuggestions
         .map(function (ob) {
@@ -229,7 +225,7 @@ function search(str) {
   );
   // loop through ranks, starting with lowest rank score (highest match)
   for (let i = 0; i < rankings.length; i++) {
-    resultsToAdd = rankedSuggestions
+    const resultsToAdd = rankedSuggestions
       .filter(function (obj) {
         return obj["rank"] === rankings[i];
       })
