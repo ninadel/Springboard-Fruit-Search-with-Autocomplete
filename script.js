@@ -100,8 +100,8 @@ const fruit = [
   "Yuzu",
 ];
 
-  // this is an array of objects which includes suggestions in different text formats
-  const suggestionObs = parseArr(fruit);
+// this is an array of objects which includes suggestions in different text formats
+const suggestionObs = parseArr(fruit);
 
 // set a maximum number of displayed suggestions, start with 8?
 const suggestionDisplayCount = 8;
@@ -270,13 +270,12 @@ function showSuggestions(results, inputVal) {
   suggestions.classList.add("has-suggestions");
 }
 
-  // this function takes the target of the click and populates the search box with the list item from the target
-  // this function is called by the click event listener
-  function useSuggestion(e) {
-    if (e.target.tagName === "LI") {
-      input.value = e.target.innerText;
-      suggestions.classList.remove("has-suggestions");
-    }
+// this function takes the target of the click and populates the search box with the list item from the target
+// this function is called by the click event listener
+function useSuggestion(e) {
+  if (e.target.tagName === "LI") {
+    input.value = e.target.innerText;
+    suggestions.classList.remove("has-suggestions");
   }
 }
 
