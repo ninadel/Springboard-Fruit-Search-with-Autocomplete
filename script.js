@@ -112,10 +112,6 @@ function startSearch() {
   // what is run when the search page is loaded?
   // keystrokes will trigger the function searchHandler
   input.addEventListener("keyup", searchHandler);
-  // clicking on a suggestion will trigger the function useSuggestion
-  suggestions.addEventListener("click", useSuggestion);
-  // clicking on a suggestion will trigger the function useSuggestion
-  suggestions.addEventListener("mouseover", highlightSuggestion);
   // focus on search box
   input.focus();
 }
@@ -261,7 +257,7 @@ function search(str) {
 
 // this function is called by the keystroke event listener
 function searchHandler(e) {
-  let searchStr = input.value;
+  let searchStr = input.value.toLowerCase();
   // TODO
   // set suggestions to be invisible
   suggestions.classList.remove("has-suggestions");
@@ -277,10 +273,6 @@ function searchHandler(e) {
       suggestions.classList.remove("has-suggestions");
     }
   }
-  // if text input is empty, do not show suggestions
-  // if text put is populated with user typed input
-  // if there are not matches, do not show suggestions
-  // if a suggestion is clicked, do not show suggestions
 }
 
 // this function handles the UI of displaying suggestions below the search box
@@ -293,10 +285,15 @@ function showSuggestions(results, inputVal) {
     // find highlight in input item
     // if string is present in
     resultItem.innerHTML = item;
+    // clicking on a suggestion will trigger the function useSuggestion
+    // clicking on a suggestion will trigger the function useSuggestion
+    resultItem.addEventListener("click", useSuggestion);
+    resultItem.addEventListener("mouseover", highlightSuggestion);
     suggestions.append(resultItem);
   }
   // if there's a match, show suggestions
   suggestions.classList.add("has-suggestions");
+  suggestions.addEventListener("mouseover", highlightSuggestion);
 }
 
 // this function takes the target of the click and populates the search box with the list item from the target
@@ -312,11 +309,8 @@ function useSuggestion(e) {
 // this function takes the target of the click and populates the search box with the list item from the target
 // this function is called by the click event listener
 function highlightSuggestion(e) {
+  console.log("highlightSuggestion");
   // TODO
-  if (e.target.tagName === "LI") {
-    e.target.classList.add("hover");
-    console.log("hover");
-  }
 }
 
 // // listener which runs when DOM is loaded
