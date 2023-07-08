@@ -22,7 +22,9 @@ input {
 }
 
 .search-container {
-  display: relative;
+  display: block;
+  position: relative;
+  float: left;
   width: 260px;
   height: 400px;
   margin: auto;
