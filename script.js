@@ -137,19 +137,6 @@ function parseArr(arr) {
   return newArr;
 }
 
-// this function takes an array of objects with string values as the first argument, a string as a second argument, and an optional number
-// this function returns an array of strings
-// this function is called by the search function
-function rankMatches(arr, str) {
-  // filter arr of fruit objects to objects that match input
-  // where indexOf input in str is not -1
-  // optional: create an arr of ordered fruit objects which promotes most relevant suggestions
-  // match scores: use indexOf for each suggestion - lowest indexOf gets promoted first
-  // reduce list of matching fruit objects into a new object which stores arrays of objects by match score
-  // take object which stores match scores, convert match scores into an array and order them so lowest match score is first
-  // iterate through match score array, starting with lowest match score, and build result list until maximum number is reached
-}
-
 // this function returns HTML which will be displayed for the LI of the suggestion
 // this function compares the inputVal to the diplay string at the rank position to determine the innerHTML fo the result
 // this function is called by search
