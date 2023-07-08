@@ -276,9 +276,7 @@ function showSuggestions(results, inputVal) {
     const resultItem = document.createElement("li");
     resultItem.innerHTML = item;
     // clicking on a suggestion will trigger the function useSuggestion
-    // clicking on a suggestion will trigger the function useSuggestion
     resultItem.addEventListener("click", useSuggestion);
-    resultItem.addEventListener("mouseover", highlightSuggestion);
     suggestions.append(resultItem);
   }
   // if there's a match, show suggestions
@@ -293,13 +291,6 @@ function useSuggestion(e) {
     input.value = e.target.innerText;
     suggestions.classList.remove("has-suggestions");
   }
-}
-
-// this function takes the target of the click and populates the search box with the list item from the target
-// this function is called by the click event listener
-function highlightSuggestion(e) {
-  console.log("highlightSuggestion");
-  // TODO
 }
 
 // // listener which runs when DOM is loaded
