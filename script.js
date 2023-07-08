@@ -265,12 +265,6 @@ function searchHandler(e) {
   // call the search function with string from input to get array of fruit results
   if (searchStr.length > 0) {
     results = search(searchStr);
-    // if there is a match from the list, call the showSuggestions function to display suggestions UI
-    if (results.length > 0) {
-      showSuggestions(results, "a");
-    } else {
-      suggestions.classList.remove("has-suggestions");
-    }
   }
 }
 
