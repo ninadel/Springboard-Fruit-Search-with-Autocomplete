@@ -258,7 +258,6 @@ function search(str) {
 // this function is called by the keystroke event listener
 function searchHandler(e) {
   let searchStr = input.value.toLowerCase();
-  // TODO
   // set suggestions to be invisible
   suggestions.classList.remove("has-suggestions");
   // set suggestions to be empty
@@ -281,9 +280,6 @@ function showSuggestions(results, inputVal) {
   // append results to the suggestions list
   for (item of results) {
     const resultItem = document.createElement("li");
-    // TODO : highlight inputval in string
-    // find highlight in input item
-    // if string is present in
     resultItem.innerHTML = item;
     // clicking on a suggestion will trigger the function useSuggestion
     // clicking on a suggestion will trigger the function useSuggestion
@@ -293,7 +289,6 @@ function showSuggestions(results, inputVal) {
   }
   // if there's a match, show suggestions
   suggestions.classList.add("has-suggestions");
-  suggestions.addEventListener("mouseover", highlightSuggestion);
 }
 
 // this function takes the target of the click and populates the search box with the list item from the target
