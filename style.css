@@ -7,11 +7,10 @@
 }
 
 body {
-  /* TODO */
   background: linear-gradient(90deg, yellow, orangered);
   display: flex;
   /* flex-direction: column; */
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 }
 
@@ -24,10 +23,10 @@ input {
 .search-container {
   display: block;
   position: relative;
-  float: left;
   width: 260px;
   height: 400px;
   margin: auto;
+  top: 200px;
 }
 
 .search-container input,
